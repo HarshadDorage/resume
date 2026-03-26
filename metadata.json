@@ -1,0 +1,5 @@
+{
+  "name": "Apex Resume Builder",
+  "description": "A professional-grade, AI-powered resume builder that allows users to create, edit, and export resumes. Features include smart file parsing (PDF/DOCX/TXT), live A4 preview, and local storage persistence.",
+  "requestFramePermissions": []
+}
