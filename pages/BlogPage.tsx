@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SurfaceCard from '../components/ui/SurfaceCard';
 
@@ -528,8 +528,16 @@ const blogArticles: BlogArticle[] = [
   }
 ];
 const BlogPage: React.FC = () => {
+  const [selectedSlug, setSelectedSlug] = useState(blogArticles[0]?.slug ?? '');
+
+  const selectedArticle = useMemo(
+    () => blogArticles.find((article) => article.slug === selectedSlug) ?? blogArticles[0],
+    [selectedSlug],
+  );
   useEffect(() => {
-    document.title = 'Resume Builder Blog | Resume Tips, ATS Guides, Career Help';
+    if (!selectedArticle) return;
+
+    document.title = `${selectedArticle.metaTitle} | Apex Resume Blog`;
 
     let metaDescription = document.querySelector('meta[name="description"]');
     if (!metaDescription) {
@@ -538,11 +546,8 @@ const BlogPage: React.FC = () => {
       document.head.appendChild(metaDescription);
     }
 
-    metaDescription.setAttribute(
-      'content',
-      'Read SEO-focused resume blogs for freshers, students, and job seekers. Learn ATS resume tips, skills, formats, and career guidance.',
-    );
-  }, []);
+    metaDescription.setAttribute('content', selectedArticle.metaDescription);
+  }, [selectedArticle]);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
@@ -556,116 +561,126 @@ const BlogPage: React.FC = () => {
             </p>
           </div>
           <SurfaceCard className="p-6">
-            <p className="text-sm font-semibold text-stone-900">Quick navigation</p>
+            <p className="text-sm font-semibold text-stone-900">Choose a blog to read</p>
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {blogArticles.map((article, index) => (
-                <a key={article.slug} href={`#${article.slug}`} className="rounded-[18px] border border-[rgba(91,63,37,0.12)] bg-white/75 px-4 py-3 text-sm font-medium text-stone-700 transition hover:bg-white hover:text-stone-950">
+                <button
+                  key={article.slug}
+                  type="button"
+                  onClick={() => setSelectedSlug(article.slug)}
+                  className={`rounded-[18px] border px-4 py-3 text-left text-sm font-medium transition ${
+                    selectedArticle.slug === article.slug
+                      ? 'border-stone-900 bg-stone-900 text-white'
+                      : 'border-[rgba(91,63,37,0.12)] bg-white/75 text-stone-700 hover:bg-white hover:text-stone-950'
+                  }`}
+                >
                   {index + 1}. {article.title}
-                </a>
+                </button>
               ))}
             </div>
           </SurfaceCard>
         </div>
 
-        <div className="space-y-12">
-          {blogArticles.map((article) => (
-            <article id={article.slug} key={article.slug} className="scroll-mt-28">
-              <SurfaceCard className="p-8 sm:p-10">
-                <div className="border-b border-[rgba(91,63,37,0.1)] pb-8">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-600">Primary keyword: {article.primaryKeyword}</p>
-                  <div className="mt-5 rounded-[22px] border border-[rgba(91,63,37,0.12)] bg-white/70 p-5">
-                    <p className="text-sm font-semibold text-stone-900">Meta title</p>
-                    <p className="mt-2 text-sm text-stone-700">{article.metaTitle}</p>
-                    <p className="mt-4 text-sm font-semibold text-stone-900">Meta description</p>
-                    <p className="mt-2 text-sm text-stone-700">{article.metaDescription}</p>
-                  </div>
-                  <h1 className="mt-6 font-serif text-3xl text-stone-950 sm:text-4xl">{article.title}</h1>
-                  <p className="mt-4 text-sm font-semibold text-stone-500">Related keywords: {article.relatedKeywords.join(', ')}</p>
-                  <div className="mt-6 space-y-4 text-base leading-8 text-stone-700">
-                    {article.intro.map((paragraph) => (
-                      <p key={paragraph}>{paragraph}</p>
-                    ))}
-                  </div>
+        {selectedArticle && (
+          <article id={selectedArticle.slug} className="scroll-mt-28">
+            <SurfaceCard className="p-8 sm:p-10">
+              <div className="border-b border-[rgba(91,63,37,0.1)] pb-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-600">Primary keyword: {selectedArticle.primaryKeyword}</p>
+                <div className="mt-5 rounded-[22px] border border-[rgba(91,63,37,0.12)] bg-white/70 p-5">
+                  <p className="text-sm font-semibold text-stone-900">Meta title</p>
+                  <p className="mt-2 text-sm text-stone-700">{selectedArticle.metaTitle}</p>
+                  <p className="mt-4 text-sm font-semibold text-stone-900">Meta description</p>
+                  <p className="mt-2 text-sm text-stone-700">{selectedArticle.metaDescription}</p>
                 </div>
-
-                <div className="mt-8 space-y-8">
-                  {article.sections.map((section) => (
-                    <section key={section.heading} className="space-y-4">
-                      <h2 className="font-serif text-2xl text-stone-950">{section.heading}</h2>
-                      {section.paragraphs?.map((paragraph) => (
-                        <p key={paragraph} className="text-base leading-8 text-stone-700">{paragraph}</p>
-                      ))}
-                      {section.bullets && (
-                        <ul className="space-y-3 text-base leading-8 text-stone-700">
-                          {section.bullets.map((bullet) => (
-                            <li key={bullet} className="flex gap-3">
-                              <span className="mt-3 h-2 w-2 shrink-0 rounded-full bg-brand-500" />
-                              <span>{bullet}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      {section.exampleTitle && (
-                        <div className="rounded-[22px] border border-[rgba(91,63,37,0.12)] bg-[rgba(255,248,240,0.75)] p-5">
-                          <h3 className="text-lg font-semibold text-stone-950">{section.exampleTitle}</h3>
-                          <div className="mt-3 space-y-2 text-sm leading-7 text-stone-700">
-                            {section.exampleBody?.map((line) => (
-                              <p key={line}>{line}</p>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </section>
+                <h1 className="mt-6 font-serif text-3xl text-stone-950 sm:text-4xl">{selectedArticle.title}</h1>
+                <p className="mt-4 text-sm font-semibold text-stone-500">Related keywords: {selectedArticle.relatedKeywords.join(', ')}</p>
+                <div className="mt-6 space-y-4 text-base leading-8 text-stone-700">
+                  {selectedArticle.intro.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
+              </div>
 
-                <section className="mt-10 rounded-[24px] border border-[rgba(91,63,37,0.12)] bg-white/70 p-6">
-                  <h2 className="font-serif text-2xl text-stone-950">FAQ</h2>
-                  <div className="mt-5 space-y-4">
-                    {article.faqs.map((faq) => (
-                      <div key={faq.question} className="rounded-[18px] border border-[rgba(91,63,37,0.1)] bg-white/80 p-4">
-                        <h3 className="text-base font-semibold text-stone-950">{faq.question}</h3>
-                        <p className="mt-2 text-sm leading-7 text-stone-700">{faq.answer}</p>
-                      </div>
+              <div className="mt-8 space-y-8">
+                {selectedArticle.sections.map((section) => (
+                  <section key={section.heading} className="space-y-4">
+                    <h2 className="font-serif text-2xl text-stone-950">{section.heading}</h2>
+                    {section.paragraphs?.map((paragraph) => (
+                      <p key={paragraph} className="text-base leading-8 text-stone-700">{paragraph}</p>
                     ))}
-                  </div>
-                </section>
+                    {section.bullets && (
+                      <ul className="space-y-3 text-base leading-8 text-stone-700">
+                        {section.bullets.map((bullet) => (
+                          <li key={bullet} className="flex gap-3">
+                            <span className="mt-3 h-2 w-2 shrink-0 rounded-full bg-brand-500" />
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {section.exampleTitle && (
+                      <div className="rounded-[22px] border border-[rgba(91,63,37,0.12)] bg-[rgba(255,248,240,0.75)] p-5">
+                        <h3 className="text-lg font-semibold text-stone-950">{section.exampleTitle}</h3>
+                        <div className="mt-3 space-y-2 text-sm leading-7 text-stone-700">
+                          {section.exampleBody?.map((line) => (
+                            <p key={line}>{line}</p>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </section>
+                ))}
+              </div>
 
-                <section className="mt-8 grid gap-6 lg:grid-cols-[1.2fr,0.8fr]">
-                  <div className="rounded-[24px] border border-[rgba(91,63,37,0.12)] bg-[rgba(255,248,240,0.75)] p-6">
-                    <h2 className="font-serif text-2xl text-stone-950">Internal linking suggestions</h2>
-                    <ul className="mt-4 space-y-3 text-sm leading-7 text-stone-700">
-                      {article.internalLinks.map((item) => (
-                        <li key={item} className="flex gap-3">
-                          <span className="mt-3 h-2 w-2 shrink-0 rounded-full bg-brand-500" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="rounded-[24px] bg-stone-950 p-6 text-white shadow-[0_24px_60px_-36px_rgba(15,23,42,0.8)]">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-200">CTA</p>
-                    <h2 className="mt-4 font-serif text-2xl">Create your resume now using our free Resume Builder</h2>
-                    <p className="mt-4 text-sm leading-7 text-stone-300">
-                      Use the builder to turn these tips into an ATS-friendly resume with cleaner structure, better readability, and faster editing.
-                    </p>
-                    <div className="mt-6 flex flex-wrap gap-3">
-                      <Link to="/builder" className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-stone-950 transition hover:bg-stone-100">
-                        Open Resume Builder
-                      </Link>
-                      <Link to="/templates" className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
-                        View Templates
-                      </Link>
+              <section className="mt-10 rounded-[24px] border border-[rgba(91,63,37,0.12)] bg-white/70 p-6">
+                <h2 className="font-serif text-2xl text-stone-950">FAQ</h2>
+                <div className="mt-5 space-y-4">
+                  {selectedArticle.faqs.map((faq) => (
+                    <div key={faq.question} className="rounded-[18px] border border-[rgba(91,63,37,0.1)] bg-white/80 p-4">
+                      <h3 className="text-base font-semibold text-stone-950">{faq.question}</h3>
+                      <p className="mt-2 text-sm leading-7 text-stone-700">{faq.answer}</p>
                     </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="mt-8 grid gap-6 lg:grid-cols-[1.2fr,0.8fr]">
+                <div className="rounded-[24px] border border-[rgba(91,63,37,0.12)] bg-[rgba(255,248,240,0.75)] p-6">
+                  <h2 className="font-serif text-2xl text-stone-950">Internal linking suggestions</h2>
+                  <ul className="mt-4 space-y-3 text-sm leading-7 text-stone-700">
+                    {selectedArticle.internalLinks.map((item) => (
+                      <li key={item} className="flex gap-3">
+                        <span className="mt-3 h-2 w-2 shrink-0 rounded-full bg-brand-500" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-[24px] bg-stone-950 p-6 text-white shadow-[0_24px_60px_-36px_rgba(15,23,42,0.8)]">
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-200">CTA</p>
+                  <h2 className="mt-4 font-serif text-2xl">Create your resume now using our free Resume Builder</h2>
+                  <p className="mt-4 text-sm leading-7 text-stone-300">
+                    Use the builder to turn these tips into an ATS-friendly resume with cleaner structure, better readability, and faster editing.
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Link to="/builder" className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-stone-950 transition hover:bg-stone-100">
+                      Open Resume Builder
+                    </Link>
+                    <Link to="/templates" className="rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+                      View Templates
+                    </Link>
                   </div>
-                </section>
-              </SurfaceCard>
-            </article>
-          ))}
-        </div>
+                </div>
+              </section>
+            </SurfaceCard>
+          </article>
+        )}
       </div>
     </section>
   );
 };
 
 export default BlogPage;
+
+
+
