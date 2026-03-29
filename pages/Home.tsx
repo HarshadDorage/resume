@@ -15,11 +15,13 @@ import {
 import { Link } from 'react-router-dom';
 import TemplateCard from '../components/TemplateCard';
 import { TEMPLATES } from '../constants';
+import beforeResumeSample from '../assets/before-resume-sample.svg';
+import afterResumeSample from '../assets/after-resume-sample.svg';
 
 const socialProofStats = [
   { icon: Star, label: 'Average rating', value: '4.9/5' },
-  { icon: Users, label: 'Active users', value: '10,000+' },
-  { icon: FileText, label: 'Resumes created', value: '50,000+' },
+  { icon: Users, label: 'Active users', value: '500+' },
+  { icon: FileText, label: 'Resumes created', value: '1,000+' },
 ];
 
 const testimonials = [
@@ -29,7 +31,7 @@ const testimonials = [
     quote: 'Pehle mera resume bilkul generic lagta tha. Is builder se ATS-friendly resume bana and I started getting actual interview calls.',
   },
   {
-    name: 'Aisha Khan',
+    name: 'Varsha Deshpande',
     role: 'Frontend Developer',
     quote: 'The templates feel clean, modern, and recruiter-friendly. Summary, skills, and project sections became much easier to structure.',
   },
@@ -125,7 +127,7 @@ const Home: React.FC = () => {
             </div>
             <div className="mt-4">
               <Link to="/builder" className="text-sm font-semibold text-brand-700 transition hover:text-brand-800">
-                Start Now - It’s Free
+                Start Now - Itï¿½s Free
               </Link>
             </div>
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-stone-600">
@@ -175,7 +177,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="px-4 py-8 sm:px-6 sm:py-12">
+      {/* <section className="px-4 py-8 sm:px-6 sm:py-12">
         <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-3">
           {socialProofStats.map((stat) => {
             const Icon = stat.icon;
@@ -184,7 +186,7 @@ const Home: React.FC = () => {
             );
           })}
         </div>
-      </section>
+      </section> */}
 
       <section className="px-4 py-16 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-7xl">
@@ -201,7 +203,7 @@ const Home: React.FC = () => {
                     <Star key={index} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <p className="mt-4 text-sm leading-7 text-stone-700">“{item.quote}”</p>
+                <p className="mt-4 text-sm leading-7 text-stone-700">ï¿½{item.quote}ï¿½</p>
                 <p className="mt-5 text-base font-semibold text-stone-950">{item.name}</p>
                 <p className="text-sm text-stone-500">{item.role}</p>
               </div>
@@ -220,11 +222,15 @@ const Home: React.FC = () => {
             <ComparisonCard
               title="Bad Resume"
               tone="bad"
+              imageSrc={beforeResumeSample}
+              imageAlt="Sample blurred weak resume preview"
               bullets={['Weak bullet points', 'No keywords for the target role', 'Not ATS friendly', 'Looks generic and forgettable']}
             />
             <ComparisonCard
               title="AI Resume"
               tone="good"
+              imageSrc={afterResumeSample}
+              imageAlt="Sample clean AI resume preview"
               bullets={['Strong impact statements', 'ATS optimized with role keywords', 'Clean modern design', 'Built to impress recruiters fast']}
             />
           </div>
@@ -359,7 +365,7 @@ const Home: React.FC = () => {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link to="/builder" className="inline-flex items-center justify-center rounded-full border border-[rgba(91,63,37,0.14)] bg-white/80 px-6 py-3.5 text-sm font-semibold text-stone-800 transition hover:bg-white">
-              Start Now - It’s Free
+              Start Now - Itï¿½s Free
             </Link>
           </div>
         </div>
@@ -375,9 +381,12 @@ const SurfaceStat: React.FC<{ icon: React.ReactNode; value: string; label: strin
   </div>
 );
 
-const ComparisonCard: React.FC<{ title: string; bullets: string[]; tone: 'bad' | 'good' }> = ({ title, bullets, tone }) => (
+const ComparisonCard: React.FC<{ title: string; bullets: string[]; tone: 'bad' | 'good'; imageSrc: string; imageAlt: string }> = ({ title, bullets, tone, imageSrc, imageAlt }) => (
   <div className={`rounded-[28px] border p-6 ${tone === 'good' ? 'border-emerald-200 bg-emerald-50/70' : 'border-red-200 bg-red-50/70'}`}>
-    <h3 className="text-xl font-semibold text-stone-950">{title}</h3>
+    <div className="overflow-hidden rounded-[22px] border border-white/70 bg-white/80 shadow-[0_20px_45px_-35px_rgba(52,31,10,0.4)]">
+      <img src={imageSrc} alt={imageAlt} className="h-auto w-full object-cover" loading="lazy" />
+    </div>
+    <h3 className="mt-5 text-xl font-semibold text-stone-950">{title}</h3>
     <div className="mt-5 space-y-3">
       {bullets.map((bullet) => (
         <div key={bullet} className="flex gap-3 text-sm text-stone-700">

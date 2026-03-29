@@ -1,5 +1,6 @@
-
 import React, { useState } from 'react';
+import apexPaymentIcon from '../assets/apex-payment-icon.svg';
+import securePaymentsBadge from '../assets/secure-payments-badge.svg';
 
 declare const Razorpay: any;
 
@@ -19,12 +20,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, onSuccess 
 
     // Replace "rzp_test_placeholder" with your actual Razorpay Key ID
     const options = {
-      key: "rzp_test_placeholder", 
+      key: "rzp_test_placeholder",
       amount: 2900, // Amount in paise (₹29.00)
       currency: "INR",
       name: "Apex Resume Builder",
       description: "One-time Resume Export Fee",
-      image: "https://api.dicebear.com/7.x/bottts/svg?seed=Apex",
+      image: apexPaymentIcon,
       handler: function (response: any) {
         // This function executes after a successful payment
         console.log("Payment Successful:", response.razorpay_payment_id);
@@ -65,13 +66,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, onSuccess 
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div 
+      <div
         className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300"
         onClick={!loading ? onClose : undefined}
       />
-      
+
       <div className="relative bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-        {/* Header Section */}
         <div className="bg-blue-600 p-8 text-white text-center">
           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-md">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -82,7 +82,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, onSuccess 
           <p className="text-blue-100 text-sm">Download your ATS-optimized resume</p>
         </div>
 
-        {/* Content Section */}
         <div className="p-8">
           <div className="flex justify-between items-center mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100">
             <div>
@@ -116,12 +115,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, onSuccess 
             </div>
           </div>
 
-          <button 
+          <button
             onClick={handleRazorpayPayment}
             disabled={loading}
             className={`w-full py-4 rounded-xl font-bold text-white shadow-lg transition-all flex items-center justify-center gap-3 ${
-              loading 
-                ? 'bg-slate-400 cursor-not-allowed' 
+              loading
+                ? 'bg-slate-400 cursor-not-allowed'
                 : 'bg-blue-600 hover:bg-blue-700 active:scale-[0.98] shadow-blue-200'
             }`}
           >
@@ -139,10 +138,10 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, onSuccess 
               </>
             )}
           </button>
-          
+
           <div className="mt-6 flex items-center justify-center gap-2 grayscale opacity-50">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Secure Payments by</span>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" alt="Razorpay" className="h-4" />
+            <img src={securePaymentsBadge} alt="Secure payments" className="h-4 w-auto" />
           </div>
         </div>
       </div>

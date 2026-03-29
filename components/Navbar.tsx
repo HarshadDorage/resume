@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, Menu, Sparkles, X } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { label } from 'framer-motion/client';
 
 const navItems = [
   { label: 'Home', to: '/' },
   { label: 'Templates', to: '/templates' },
   { label: 'Builder', to: '/builder' },
-  
-  {label: 'Blog', to: '/blog' },
+  { label: 'How to Use', to: '/how-to-use' },
+  { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
 ];
 
@@ -52,10 +51,6 @@ const Navbar: React.FC = () => {
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
-            {/* <div className="hidden items-center gap-2 rounded-full bg-brand-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-brand-700 xl:inline-flex">
-              <Sparkles className="h-3.5 w-3.5" />
-              Start Now - It's Free
-            </div> */}
             <Link to="/builder" className="inline-flex items-center gap-2 rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-stone-800">
               Create Resume in 2 Minutes ??
               <ArrowRight className="h-4 w-4" />
@@ -107,4 +102,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-

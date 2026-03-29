@@ -7,6 +7,7 @@ const BlogPage = lazy(() => import('./pages/BlogPage'));
 const Builder = lazy(() => import('./pages/Builder'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const Home = lazy(() => import('./pages/Home'));
+const HowToUsePage = lazy(() => import('./pages/HowToUsePage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const Templates = lazy(() => import('./pages/Templates'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
@@ -20,6 +21,7 @@ const App: React.FC = () => {
           <Route path="/templates" element={<Templates />} />
           <Route path="/builder" element={<Builder />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/how-to-use" element={<HowToUsePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />

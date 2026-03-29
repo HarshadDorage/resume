@@ -1,0 +1,8 @@
+<svg width="320" height="64" viewBox="0 0 320 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="64" rx="18" fill="#F8FAFC"/>
+  <rect x="14" y="14" width="36" height="36" rx="12" fill="#2563EB"/>
+  <path d="M28 25L36 33L28 41" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M39 25L31 33L39 41" stroke="#BFDBFE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="62" y="29" fill="#0F172A" font-family="Arial, sans-serif" font-size="11" font-weight="700" letter-spacing="1.8">SECURE PAYMENTS</text>
+  <text x="62" y="47" fill="#334155" font-family="Arial, sans-serif" font-size="20" font-weight="700">Powered checkout</text>
+</svg>
