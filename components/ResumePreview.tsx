@@ -1,5 +1,6 @@
 import React from 'react';
 import { ResumeData } from '../types';
+import { cleanText } from '../utils/text';
 
 interface ResumePreviewProps {
   data: ResumeData;
@@ -30,7 +31,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
     creative: {
       font: "'Inter', sans-serif",
       headerAlign: 'text-left',
-      sectionTitle: 'text-[12pt] font-extrabold text-blue-700 mb-3 flex items-center gap-2 after:content-["\"] after:h-[2px] after:bg-blue-100 after:flex-1',
+      sectionTitle: 'text-[12pt] font-extrabold text-blue-700 mb-3 flex items-center gap-2 after:content-[""] after:h-[2px] after:bg-blue-100 after:flex-1',
       nameSize: 'text-[32pt]',
       contactSize: 'text-[9pt]',
       accentColor: '#2563eb',
@@ -94,6 +95,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
   };
 
   const styles = styleConfigs[tplId as keyof typeof styleConfigs] || styleConfigs.modern;
+  const formatRange = (start?: string, end?: string) => [start, end].filter(Boolean).join(' - ');
 
   const renderSection = (sectionId: string) => {
     switch (sectionId) {
@@ -101,7 +103,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
         return data.summary ? (
           <section key="summary" className="mb-5">
             <h2 className={styles.sectionTitle}>Professional Summary</h2>
-            <p className="text-[10pt] text-black leading-snug text-justify whitespace-pre-wrap">{data.summary}</p>
+            <p className="text-[10pt] text-black leading-snug text-justify whitespace-pre-wrap">{cleanText(data.summary)}</p>
           </section>
         ) : null;
       case 'experience':
@@ -111,21 +113,21 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
             <div className="space-y-4">
               {data.experience.map((exp) => (
                 <div key={exp.id}>
-                  <div className="flex justify-between items-baseline">
-                    <h3 className="text-[10.5pt] font-bold text-black">{exp.jobTitle}</h3>
-                    <span className="text-[9.5pt] font-medium text-black">{exp.startDate} - {exp.endDate}</span>
+                  <div className="flex justify-between items-baseline gap-4">
+                    <h3 className="text-[10.5pt] font-bold text-black">{cleanText(exp.jobTitle)}</h3>
+                    <span className="text-right text-[9.5pt] font-medium text-black">{cleanText(formatRange(exp.startDate, exp.endDate))}</span>
                   </div>
-                  <div className="mb-1 flex justify-between items-baseline">
-                    <span className="text-[10pt] font-bold italic text-black opacity-80">{exp.company}</span>
-                    <span className="text-[9.5pt] italic text-black opacity-70">{exp.location}</span>
+                  <div className="mb-1 flex justify-between items-baseline gap-4">
+                    <span className="text-[10pt] font-bold italic text-black opacity-80">{cleanText(exp.company)}</span>
+                    <span className="text-right text-[9.5pt] italic text-black opacity-70">{cleanText(exp.location)}</span>
                   </div>
                   <div className="text-[10pt] leading-snug text-black">
                     {(exp.description ?? '').split('\n').filter((line) => line.trim()).map((line, index) => {
-                      const cleanLine = line.trim().replace(/^[ï¿½\-*]\s*/, '');
+                      const cleanLine = line.trim().replace(/^[•\-*]\s*/, '');
                       return (
                         <div key={index} className="mb-0.5 flex items-start gap-2">
-                          <span className="mt-1 text-[8pt] font-bold">ï¿½</span>
-                          <p className="flex-1">{cleanLine}</p>
+                          <span className="mt-1 text-[8pt] font-bold">•</span>
+                          <p className="flex-1">{cleanText(cleanLine)}</p>
                         </div>
                       );
                     })}
@@ -141,7 +143,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
             <h2 className={styles.sectionTitle}>Skills</h2>
             <div className="text-[10pt] leading-snug text-black">
               <span className="font-bold">Core Competencies: </span>
-              {data.skills.join(', ')}
+              {cleanText(data.skills.join(', '))}
             </div>
           </section>
         ) : null;
@@ -152,15 +154,15 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
             <div className="space-y-3">
               {data.education.map((edu) => (
                 <div key={edu.id}>
-                  <div className="flex justify-between items-baseline">
-                    <h3 className="text-[10.5pt] font-bold text-black">{edu.degree}</h3>
-                    <span className="text-[9.5pt] font-medium text-black">{edu.startDate} - {edu.endDate}</span>
+                  <div className="flex justify-between items-baseline gap-4">
+                    <h3 className="text-[10.5pt] font-bold text-black">{cleanText(edu.degree)}</h3>
+                    <span className="text-right text-[9.5pt] font-medium text-black">{cleanText(formatRange(edu.startDate, edu.endDate))}</span>
                   </div>
-                  <div className="flex justify-between items-baseline">
-                    <span className="text-[10pt] font-bold text-black opacity-80">{edu.institution}</span>
-                    <span className="text-[9.5pt] italic text-black opacity-70">{edu.location}</span>
+                  <div className="flex justify-between items-baseline gap-4">
+                    <span className="text-[10pt] font-bold text-black opacity-80">{cleanText(edu.institution)}</span>
+                    <span className="text-right text-[9.5pt] italic text-black opacity-70">{cleanText(edu.location)}</span>
                   </div>
-                  {edu.gpa && <p className="mt-0.5 text-[9.5pt] font-medium text-black">GPA: {edu.gpa}</p>}
+                  {edu.gpa && <p className="mt-0.5 text-[9.5pt] font-medium text-black">CGPA / Percentage: {cleanText(edu.gpa)}</p>}
                 </div>
               ))}
             </div>
@@ -173,9 +175,9 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
             <div className="space-y-3">
               {data.projects.map((proj) => (
                 <div key={proj.id}>
-                  <h3 className="mb-0.5 text-[10.5pt] font-bold text-black">{proj.name}</h3>
-                  <p className="mb-1 text-[10pt] leading-snug text-black">{proj.description}</p>
-                  <p className="text-[9pt] italic text-black"><span className="font-bold not-italic opacity-80">Tech Stack:</span> {proj.technologies}</p>
+                  <h3 className="mb-0.5 text-[10.5pt] font-bold text-black">{cleanText(proj.name)}</h3>
+                  <p className="mb-1 text-[10pt] leading-snug text-black">{cleanText(proj.description)}</p>
+                  <p className="text-[9pt] italic text-black"><span className="font-bold not-italic opacity-80">Tech Stack:</span> {cleanText(proj.technologies)}</p>
                 </div>
               ))}
             </div>
@@ -185,7 +187,14 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
         return data.certifications?.length ? (
           <section key="certifications" className="mb-5">
             <h2 className={styles.sectionTitle}>Certifications</h2>
-            <div className="text-[10pt] leading-snug text-black">{data.certifications.join(' ï¿½ ')}</div>
+            <div className="text-[10pt] leading-snug text-black">{cleanText(data.certifications.join(' - '))}</div>
+          </section>
+        ) : null;
+      case 'hobbies':
+        return data.hobbies?.length ? (
+          <section key="hobbies" className="mb-5">
+            <h2 className={styles.sectionTitle}>Hobbies & Interests</h2>
+            <div className="text-[10pt] leading-snug text-black">{cleanText(data.hobbies.join(', '))}</div>
           </section>
         ) : null;
       default:
@@ -206,7 +215,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
         <div className="absolute inset-0 z-50 flex scale-150 rotate-[-30deg] flex-wrap content-start justify-center overflow-hidden opacity-[0.02]">
           {Array.from({ length: 100 }).map((_, index) => (
             <div key={index} className="whitespace-nowrap p-10 text-[20pt] font-bold uppercase">
-              APEX RESUME BUILDER ï¿½ PREVIEW ONLY
+              APEX RESUME BUILDER - PREVIEW ONLY
             </div>
           ))}
         </div>
@@ -214,19 +223,19 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
 
       <header className={`${styles.headerAlign} mb-8`}>
         <h1 className={`${styles.nameSize} mb-2 font-extrabold uppercase tracking-tight text-black`} style={{ color: styles.accentColor }}>
-          {data.personalInfo.fullName || 'FULL NAME'}
+          {cleanText(data.personalInfo.fullName || 'FULL NAME')}
         </h1>
         <div className={`flex flex-wrap ${styles.headerAlign === 'text-center' ? 'justify-center' : 'justify-start'} gap-x-3 text-[10pt] text-black`}>
-          {data.personalInfo.address && <span>{data.personalInfo.address}</span>}
+          {data.personalInfo.address && <span>{cleanText(data.personalInfo.address)}</span>}
           {data.personalInfo.address && (data.personalInfo.email || data.personalInfo.phone) && <span className="opacity-30">|</span>}
-          {data.personalInfo.email && <span className="font-bold">{data.personalInfo.email}</span>}
+          {data.personalInfo.email && <span className="font-bold">{cleanText(data.personalInfo.email)}</span>}
           {data.personalInfo.email && data.personalInfo.phone && <span className="opacity-30">|</span>}
-          {data.personalInfo.phone && <span>{data.personalInfo.phone}</span>}
+          {data.personalInfo.phone && <span>{cleanText(data.personalInfo.phone)}</span>}
         </div>
         <div className={`mt-1 flex flex-wrap ${styles.headerAlign === 'text-center' ? 'justify-center' : 'justify-start'} gap-x-3 text-[10pt] text-black`}>
-          {data.personalInfo.linkedin && <span className="font-medium underline opacity-80">{data.personalInfo.linkedin}</span>}
+          {data.personalInfo.linkedin && <span className="font-medium underline opacity-80">{cleanText(data.personalInfo.linkedin)}</span>}
           {data.personalInfo.linkedin && data.personalInfo.portfolio && <span className="opacity-30">|</span>}
-          {data.personalInfo.portfolio && <span className="font-medium underline opacity-80">{data.personalInfo.portfolio}</span>}
+          {data.personalInfo.portfolio && <span className="font-medium underline opacity-80">{cleanText(data.personalInfo.portfolio)}</span>}
         </div>
       </header>
 
@@ -236,3 +245,5 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, id, isExporting = f
 };
 
 export default ResumePreview;
+
+

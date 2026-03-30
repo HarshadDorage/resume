@@ -43,6 +43,7 @@ export const INITIAL_DATA: ResumeData = {
     },
   ],
   certifications: ['AWS Certified Solutions Architect', 'Google Cloud Professional Developer'],
+  hobbies: [],
   sectionOrder: ['summary', 'experience', 'skills', 'education', 'projects', 'certifications'],
 };
 
@@ -146,3 +147,4 @@ export const getTemplatesForRole = (role?: string) => {
   const templateIds = ROLE_TEMPLATES[activeRole] ?? ROLE_TEMPLATES[fallbackRole];
   return TEMPLATES.filter((template) => templateIds.includes(template.id));
 };
+

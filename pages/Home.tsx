@@ -17,6 +17,7 @@ import TemplateCard from '../components/TemplateCard';
 import { TEMPLATES } from '../constants';
 import beforeResumeSample from '../assets/before-resume-sample.svg';
 import afterResumeSample from '../assets/after-resume-sample.svg';
+import SEO from '../components/SEO';
 
 const socialProofStats = [
   { icon: Star, label: 'Average rating', value: '4.9/5' },
@@ -102,6 +103,7 @@ const Home: React.FC = () => {
 
   return (
     <>
+      <SEO title="AI Resume Builder for Freshers | Create ATS-Friendly Resume in 2 Minutes" description="Create professional ATS-friendly resumes in 2 minutes using AI. Perfect for freshers, students, and job seekers in India." keywords="AI resume builder, ATS resume, fresher resume, resume builder India" />
       <section className="px-4 pb-16 pt-8 sm:px-6 sm:pb-24 sm:pt-10">
         <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.05fr,0.95fr]">
           <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="section-shell pt-8">
@@ -111,14 +113,14 @@ const Home: React.FC = () => {
             </div>
             <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-stone-500">Used by 10,000+ job seekers</p>
             <h1 className="mt-4 max-w-4xl text-5xl font-bold leading-[1.02] text-stone-950 sm:text-6xl xl:text-7xl">
-              Get <span className="text-gradient">3x More Interviews</span> with an AI-Powered Resume
+              Create <span className="text-gradient">ATS-Friendly Resume in 2 Minutes</span> and Get 3x More Interviews
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-600 sm:text-xl">
               Create ATS-friendly resumes in minutes and stand out from 1000+ applicants with sharper content, cleaner templates, and faster editing.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Link to="/builder" className="inline-flex items-center justify-center gap-2 rounded-full bg-stone-950 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-stone-800">
-                Create Resume in 2 Minutes ??
+                Create Resume in 2 Minutes
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <a href="#live-demo" className="inline-flex items-center justify-center rounded-full border border-[rgba(91,63,37,0.14)] bg-white/65 px-6 py-3.5 text-sm font-semibold text-stone-800 transition hover:bg-white">
@@ -127,7 +129,7 @@ const Home: React.FC = () => {
             </div>
             <div className="mt-4">
               <Link to="/builder" className="text-sm font-semibold text-brand-700 transition hover:text-brand-800">
-                Start Now - It�s Free
+                Start Now - It's Free
               </Link>
             </div>
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-stone-600">
@@ -203,7 +205,7 @@ const Home: React.FC = () => {
                     <Star key={index} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <p className="mt-4 text-sm leading-7 text-stone-700">�{item.quote}�</p>
+                <p className="mt-4 text-sm leading-7 text-stone-700">"{item.quote}"</p>
                 <p className="mt-5 text-base font-semibold text-stone-950">{item.name}</p>
                 <p className="text-sm text-stone-500">{item.role}</p>
               </div>
@@ -286,7 +288,7 @@ const Home: React.FC = () => {
         <div className="mx-auto max-w-7xl rounded-[40px] bg-stone-950 px-8 py-10 text-white shadow-[0_34px_90px_-48px_rgba(15,23,42,0.9)] sm:px-10 sm:py-12">
           <div className="section-shell pt-8 max-w-3xl before:bg-gradient-to-r before:from-brand-300 before:to-transparent">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand-200">Trust</p>
-            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">Your data is ????????, your workflow is simple, and the goal is clear</h2>
+            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">Your data is safe, your workflow is simple, and the goal is clear</h2>
             <p className="mt-4 text-base leading-7 text-stone-300">No spam. No hidden charges. No confusing setup. Just a faster way to create a better resume.</p>
           </div>
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
@@ -361,11 +363,11 @@ const Home: React.FC = () => {
           <h2 className="mt-4 max-w-2xl text-3xl font-bold text-stone-950 sm:text-4xl">Start now, improve trust instantly, and give job seekers a clearer reason to convert.</h2>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link to="/builder" className="inline-flex items-center justify-center gap-2 rounded-full bg-stone-950 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-stone-800">
-              Create Resume in 2 Minutes ??
+              Create Resume in 2 Minutes
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link to="/builder" className="inline-flex items-center justify-center rounded-full border border-[rgba(91,63,37,0.14)] bg-white/80 px-6 py-3.5 text-sm font-semibold text-stone-800 transition hover:bg-white">
-              Start Now - It�s Free
+              Start Now - It's Free
             </Link>
           </div>
         </div>
@@ -407,3 +409,4 @@ const TrustCard: React.FC<{ icon: React.ReactNode; title: string; description: s
 );
 
 export default Home;
+

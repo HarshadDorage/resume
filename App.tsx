@@ -8,7 +8,9 @@ const Builder = lazy(() => import('./pages/Builder'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const Home = lazy(() => import('./pages/Home'));
 const HowToUsePage = lazy(() => import('./pages/HowToUsePage'));
+const ManualBuilderPage = lazy(() => import('./pages/ManualBuilderPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
+const SmartBuilderPage = lazy(() => import('./pages/SmartBuilderPage'));
 const Templates = lazy(() => import('./pages/Templates'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
 
@@ -20,6 +22,8 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/templates" element={<Templates />} />
           <Route path="/builder" element={<Builder />} />
+          <Route path="/builder/smart" element={<SmartBuilderPage />} />
+          <Route path="/builder/manual" element={<ManualBuilderPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/how-to-use" element={<HowToUsePage />} />
           <Route path="/contact" element={<ContactPage />} />

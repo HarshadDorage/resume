@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
 
           <div className="hidden items-center gap-3 md:flex">
             <Link to="/builder" className="inline-flex items-center gap-2 rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-stone-800">
-              Create Resume in 2 Minutes ??
+              Create Resume in 2 Minutes
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
                 </NavLink>
               ))}
               <Link to="/builder" className="mt-2 flex items-center justify-center gap-2 rounded-[18px] bg-brand-600 px-4 py-3 text-sm font-semibold text-white">
-                Create Resume in 2 Minutes ??
+                Create Resume in 2 Minutes
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -102,3 +102,4 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+

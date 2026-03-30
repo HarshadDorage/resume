@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
             <div className="mt-6 flex flex-wrap gap-3">
               <motion.div whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
                 <Link to="/builder" className="inline-flex items-center gap-2 rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:bg-stone-800 hover:shadow-[0_18px_40px_-20px_rgba(28,25,23,0.85)]">
-                  Create Resume in 2 Minutes ??
+                  Create Resume in 2 Minutes
                   <motion.span whileHover={{ x: 3 }} transition={{ type: 'spring', stiffness: 320, damping: 18 }}>
                     <ArrowUpRight className="h-4 w-4" />
                   </motion.span>
@@ -115,7 +115,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-[rgba(91,63,37,0.1)] pt-6 text-sm text-stone-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>� 2026 Apex Resume. All rights reserved.</p>
+          <p>Copyright 2026 Apex Resume. All rights reserved.</p>
           <p>Made to improve trust, conversions, and better job search outcomes.</p>
         </div>
       </div>
@@ -124,3 +124,4 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+
